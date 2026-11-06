@@ -1,66 +1,125 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Restaurant App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A restaurant management application built with Laravel. It includes management screens for users, categories, menus, and dining tables, plus cashier, sales, and reporting features.
 
-## About Laravel
+## Technology stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+| Technology | Version |
+| --- | --- |
+| PHP | `^8.0.2` (Composer requirement; PHP 8.1 or 8.2 is recommended for this Laravel 9 project) |
+| Laravel | `9.48.0` (locked in `composer.lock`) |
+| Database | MySQL or MariaDB |
+| Node.js / npm | Node.js 18+ and npm (for Vite and frontend assets) |
+| Vite | `^4.0` |
+| Tailwind CSS | `^3.1` |
+| Alpine.js | `^3.4` |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The project has been run with PHP 8.5, but this older Laravel/dependency stack can emit PHP deprecation warnings on newer PHP releases.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Requirements
 
-## Learning Laravel
+- PHP and Composer
+- MySQL or MariaDB
+- Node.js and npm
+- PHP's PDO MySQL extension
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Clone and run locally
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Run these commands from a terminal. Replace `<repository-url>` with the Git URL for this project.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone the project and enter its folder:**
 
-## Laravel Sponsors
+   ```bash
+   git clone <repository-url>
+   cd restaurantApp
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+2. **Install PHP dependencies and create your local environment file:**
 
-### Premium Partners
+   ```bash
+   composer install
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+3. **Create a database** in MySQL or MariaDB. The default database name in `.env.example` is `restaurantapp`.
 
-## Contributing
+4. **Configure database access** in `.env` to match your local database server:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   ```dotenv
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=restaurantapp
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-## Code of Conduct
+   Set `DB_USERNAME` and `DB_PASSWORD` to the credentials configured on your machine.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. **Create the schema and load the starter data:**
 
-## Security Vulnerabilities
+   ```bash
+   php artisan migrate --seed
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   The seeders load example users, categories, menu items, tables, sales, and sale details. The seeded users all use the development password `User@1234`; change or remove these accounts before deploying the application.
 
-## License
+6. **Install and build frontend assets:**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   ```bash
+   npm install
+   npm run build
+   ```
+
+7. **Start the local Laravel server:**
+
+   ```bash
+   php artisan serve
+   ```
+
+   Open the URL printed by Artisan, usually [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+### Frontend development watcher
+
+To rebuild frontend assets automatically as you edit them, run this command in a second terminal and leave it running:
+
+```bash
+npm run dev
+```
+
+## Useful commands
+
+```bash
+php artisan migrate --seed   # Apply migrations and load starter records
+php artisan db:seed          # Load or update starter records
+php artisan route:list       # List application routes
+npm run build                # Build production frontend assets
+```
+
+## Project structure
+
+| Path | Contents |
+| --- | --- |
+| `app/Http/Controllers/` | Web request handling, authentication, cashier, management, and reports |
+| `app/Http/Middleware/` | Request middleware, including admin access checks |
+| `app/Models/` | Eloquent models for users, categories, menus, tables, and sales |
+| `app/Exports/` | Report export classes |
+| `bootstrap/` | Laravel application bootstrap and cache |
+| `config/` | Application and service configuration |
+| `database/migrations/` | Database schema migrations |
+| `database/seeders/` | Starter data seeders and `DatabaseSeeder` |
+| `database/factories/` | Model factories for tests and development |
+| `public/` | Web entry point and publicly served assets, including menu images |
+| `resources/views/` | Blade templates for authentication, management, cashier, and reports |
+| `resources/css/`, `resources/js/` | Frontend source assets compiled by Vite |
+| `routes/` | Web, API, authentication, and console routes |
+| `storage/` | Logs, cache, sessions, and generated application files |
+| `tests/` | Automated tests |
+| `restaurantapp.sql` | SQL dump of the original sample database |
+
+## Notes
+
+- `.env` contains machine-specific configuration and should not be committed.
+- `restaurantapp.sql` is provided as a database dump; for a fresh local setup, use the migrations and seeders above.
+- The seeders use the sample IDs and update their matching records when run again. `php artisan migrate:fresh` drops all existing tables and data, so only use it when you intend to reset the database.
